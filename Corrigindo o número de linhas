@@ -1,0 +1,42 @@
+# Corrigindo o número de linhas para o sales_history
+
+# Gerando um conjunto de dados fictícios para a Multiplan com base em comportamento de clientes e interações digitais.
+import pandas as pd
+import numpy as np
+
+# Definindo um número de clientes e interações para gerar os dados
+np.random.seed(42)  # Para reprodutibilidade
+num_customers = 100
+num_interactions = 500
+
+# Gerando dados fictícios para os clientes
+customers = pd.DataFrame({
+    'customer_id': range(1, num_customers + 1),
+    'company_size': np.random.choice(['small', 'medium', 'large'], num_customers, p=[0.5, 0.3, 0.2]),
+    'industry': np.random.choice(['energy', 'manufacturing', 'services', 'retail'], num_customers),
+    'annual_spending': np.random.uniform(1000, 50000, num_customers),
+    'service_preference': np.random.choice(['energy management', 'chillers', 'centrifuges', 'preventive maintenance'], num_customers)
+})
+
+# Gerando dados fictícios de interações online (social media)
+interactions = pd.DataFrame({
+    'interaction_id': range(1, num_interactions + 1),
+    'customer_id': np.random.choice(customers['customer_id'], num_interactions),
+    'platform': np.random.choice(['Instagram', 'LinkedIn', 'Twitter'], num_interactions),
+    'interaction_type': np.random.choice(['like', 'comment', 'share', 'click'], num_interactions),
+    'timestamp': pd.date_range(start='2023-01-01', periods=num_interactions, freq='6H')
+})
+
+# Corrigindo o número de vendas para igualar ao de clientes
+num_sales = num_customers * 2  # Dois registros de vendas para cada cliente
+
+# Gerando um exemplo simples de histórico de vendas
+sales_history = pd.DataFrame({
+    'sale_id': range(1, num_sales + 1),
+    'customer_id': np.random.choice(customers['customer_id'], num_sales),
+    'service': np.random.choice(['energy management', 'chillers', 'centrifuges', 'preventive maintenance'], num_sales),
+    'sale_amount': np.random.uniform(1000, 10000, num_sales),
+    'sale_date': pd.date_range(start='2023-01-01', periods=num_sales, freq='3D')
+})
+
+customers.head(), interactions.head(), sales_history.head()
