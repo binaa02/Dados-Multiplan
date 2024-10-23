@@ -1,0 +1,24 @@
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Definindo as variáveis independentes e dependentes
+X = customers_clean[['cluster']]  # Usando cluster como variável preditora
+y = customers_clean['annual_spending']
+
+# Dividindo os dados em conjuntos de treino e teste
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Criando o modelo de regressão linear
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Fazendo previsões
+y_pred = model.predict(X_test)
+
+# Avaliando o modelo
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f'Mean Squared Error: {mse}')
+print(f'R^2 Score: {r2}')
