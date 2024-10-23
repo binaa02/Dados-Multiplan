@@ -1,0 +1,23 @@
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+# Selecionando as colunas relevantes para a clusterização
+cluster_data = customers_clean[['annual_spending', 'company_size']]
+cluster_data = pd.get_dummies(cluster_data, columns=['company_size'], drop_first=True)  # Transformação de variáveis categóricas
+
+# Normalizando os dados
+scaler = StandardScaler()
+cluster_data_scaled = scaler.fit_transform(cluster_data)
+
+# Aplicando K-Means para segmentação
+kmeans = KMeans(n_clusters=3, random_state=42)  # Ajustar o número de clusters conforme necessário
+customers_clean['cluster'] = kmeans.fit_predict(cluster_data_scaled)
+
+# Visualizando os clusters
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=customers_clean, x='annual_spending', y='cluster', hue='cluster', palette='Set2')
+plt.title('Segmentação de Clientes com K-Means')
+plt.xlabel('Gastos Anuais (R$)')
+plt.ylabel('Cluster')
+plt.legend(title='Cluster')
+plt.show()
