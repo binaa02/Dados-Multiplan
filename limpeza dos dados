@@ -1,0 +1,23 @@
+# Iniciando a limpeza dos dados gerados anteriormente
+
+# Verificando dados ausentes nas tabelas
+missing_customers = customers.isnull().sum()
+missing_interactions = interactions.isnull().sum()
+missing_sales = sales_history.isnull().sum()
+
+# Removendo duplicatas (se houver)
+customers_clean = customers.drop_duplicates()
+interactions_clean = interactions.drop_duplicates()
+sales_history_clean = sales_history.drop_duplicates()
+
+# Conferindo os tipos de dados para padronização
+customers_dtypes = customers_clean.dtypes
+interactions_dtypes = interactions_clean.dtypes
+sales_dtypes = sales_history_clean.dtypes
+
+# Convertendo as colunas de datas para o tipo datetime (se necessário)
+sales_history_clean['sale_date'] = pd.to_datetime(sales_history_clean['sale_date'])
+interactions_clean['timestamp'] = pd.to_datetime(interactions_clean['timestamp'])
+
+# Conferindo os dados limpos
+customers_clean.head(), interactions_clean.head(), sales_history_clean.head(), missing_customers, missing_interactions, missing_sales
