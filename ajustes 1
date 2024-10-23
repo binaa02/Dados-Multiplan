@@ -1,0 +1,36 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Ajustando o estilo das visualizações
+sns.set(style="whitegrid")
+
+# Análise 1: Frequência de serviços mais vendidos
+service_sales_count = sales_history_clean['service'].value_counts()
+
+plt.figure(figsize=(8, 5))
+sns.barplot(x=service_sales_count.index, y=service_sales_count.values, palette='viridis')
+plt.title('Frequência dos Serviços Vendidos')
+plt.xlabel('Serviços')
+plt.ylabel('Número de Vendas')
+plt.xticks(rotation=45)
+plt.show()
+
+# Análise 2: Gastos médios por tipo de empresa
+avg_spending_by_company_size = customers_clean.groupby('company_size')['annual_spending'].mean()
+
+plt.figure(figsize=(8, 5))
+sns.barplot(x=avg_spending_by_company_size.index, y=avg_spending_by_company_size.values, palette='muted')
+plt.title('Gastos Médios Anuais por Tipo de Empresa')
+plt.xlabel('Tamanho da Empresa')
+plt.ylabel('Gasto Médio Anual (R$)')
+plt.show()
+
+# Análise 3: Frequência de interações por plataforma
+platform_interactions_count = interactions_clean['platform'].value_counts()
+
+plt.figure(figsize=(8, 5))
+sns.barplot(x=platform_interactions_count.index, y=platform_interactions_count.values, palette='coolwarm')
+plt.title('Frequência de Interações por Plataforma')
+plt.xlabel('Plataforma')
+plt.ylabel('Número de Interações')
+plt.show()
